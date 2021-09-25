@@ -198,10 +198,21 @@ def iterative_quick_sort(array):
     return array
 
 
+def counting_sort(array, low, high):
+    freq = {}
+    for i in array:
+        freq[i] = freq.get(i, 0) + 1
+    sorted_array = []
+    for i in range(low, high + 1):
+        if freq.get(i) is None:
+            continue
+        sorted_array = sorted_array + ([i] * freq[i])
+    return sorted_array
+
+
 if __name__ == '__main__':
-    array = [12, 543, 123, 6565, 876, 123, 5454, 6, 451234, 6565, 234, 4357867, 345, 345]
+    array = [9, 5, 7, 2, 8, 3, 11, 19, 15, 1, 12, 14, 2, 5, 9, 11, 3]
     print(array)
-    array = iterative_quick_sort(array)
+    array = counting_sort(array, 0, 20)
     print(array)
     print(is_sorted(array))
-

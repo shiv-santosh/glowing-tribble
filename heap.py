@@ -57,7 +57,7 @@ def is_heap(array):
 
 
 if __name__ == '__main__':
-    array = [9, 5, 7, 2, 8, 3, 11, 19, 32, 1, 92, 45, 2, 5, 9, 11, 3]
+    array = [9, 5, 7, 2, 8, 3, 11, 19, 15, 1, 12, 14, 2, 5, 9, 11, 3]
     print(is_heap(array))
     print(is_heap(heap_bottom_up(array)))
     print(is_sorted(heap_sort(array)))
