@@ -210,9 +210,34 @@ def counting_sort(array, low, high):
     return sorted_array
 
 
+def counting_sort_radix(array, place):
+    freq = {}
+    d = pow(10, place)
+    for i in array:
+        k = (i // d) % 10
+        freq[k] = freq.get(k, []) + [i]
+    sorted_array = []
+    for i in range(10):
+        if freq.get(i) is None:
+            continue
+        sorted_array = sorted_array + freq[i]
+    return sorted_array
+
+
+def radix_sort(array):
+    m = max(array)
+    i = 0
+    sorted_array = array
+    while m > 0:
+        sorted_array = counting_sort_radix(sorted_array, i)
+        i += 1
+        m = m // 10
+    return sorted_array
+
+
 if __name__ == '__main__':
     array = [9, 5, 7, 2, 8, 3, 11, 19, 15, 1, 12, 14, 2, 5, 9, 11, 3]
     print(array)
-    array = counting_sort(array, 0, 20)
+    array = radix_sort(array)
     print(array)
     print(is_sorted(array))
