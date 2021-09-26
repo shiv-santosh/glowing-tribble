@@ -9,30 +9,73 @@ class BinaryTree:
         self.val = val
 
 
-def random_binary_tree():
-    node = BinaryTree(int((random.random() * 20) // 1))
+def random_binary_tree(random=True):
+    i = 0
+    node = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
 
-    node.left = BinaryTree(int((random.random() * 20) // 1))
-    node.right = BinaryTree(int((random.random() * 20) // 1))
+    i += 1
+    node.left.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
 
-    node.left.left = BinaryTree(int((random.random() * 20) // 1))
-    node.left.right = BinaryTree(int((random.random() * 20) // 1))
-    node.right.left = BinaryTree(int((random.random() * 20) // 1))
-    node.right.right = BinaryTree(int((random.random() * 20) // 1))
+    i += 1
+    node.left.left.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.left.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.right.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.right.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.left.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.left.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.right.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.right.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
 
-    node.left.left = BinaryTree(int((random.random() * 20) // 1))
-    node.left.right = BinaryTree(int((random.random() * 20) // 1))
-    node.right.left = BinaryTree(int((random.random() * 20) // 1))
-    node.right.right = BinaryTree(int((random.random() * 20) // 1))
+    # i += 1
+    # node.left.left.left.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.left.left.left.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.left.left.right.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.left.left.right.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.left.right.left.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.left.right.left.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.left.right.right.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.left.right.right.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.right.left.left.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.right.left.left.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.right.left.right.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.right.left.right.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.right.right.left.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.right.right.left.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.right.right.right.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    # i += 1
+    # node.right.right.right.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
 
-    node.left.left.left = BinaryTree(int((random.random() * 20) // 1))
-    node.left.left.right = BinaryTree(int((random.random() * 20) // 1))
-    node.left.right.left = BinaryTree(int((random.random() * 20) // 1))
-    node.left.right.right = BinaryTree(int((random.random() * 20) // 1))
-    node.right.left.left = BinaryTree(int((random.random() * 20) // 1))
-    node.right.left.right = BinaryTree(int((random.random() * 20) // 1))
-    node.right.right.left = BinaryTree(int((random.random() * 20) // 1))
-    node.right.right.right = BinaryTree(int((random.random() * 20) // 1))
     print("-=-=-=-=-=-=-=-=-=-=-RANDOM_TREE-=-=-=-=-=-=-=-=-=-=-")
     print_tree(node)
     print("-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n")
@@ -53,3 +96,45 @@ def print_tree(node: BinaryTree, right=None, level=0):
     print(s)
     print_tree(node.right, True, level + 1)
     print_tree(node.left, False, level + 1)
+
+
+def invert_binary_tree(node: BinaryTree):
+    if node is None:
+        return None
+    node.right, node.left = invert_binary_tree(node.left), invert_binary_tree(node.right)
+    return node
+
+
+def get_height(node: BinaryTree):
+    if node is None:
+        return -1
+    return 1 + max(get_height(node.left), get_height(node.left))
+
+
+def preorder(node: BinaryTree):
+    if node is None:
+        return
+    print(node.val)
+    preorder(node.left)
+    preorder(node.right)
+
+
+def inorder(node: BinaryTree):
+    if node is None:
+        return
+    inorder(node.left)
+    print(node.val)
+    inorder(node.right)
+
+
+def postorder(node: BinaryTree):
+    if node is None:
+        return
+    postorder(node.left)
+    postorder(node.right)
+    print(node.val)
+
+
+if __name__ == '__main__':
+    node = random_binary_tree(False)
+    postorder(node)
