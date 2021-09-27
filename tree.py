@@ -43,38 +43,38 @@ def random_binary_tree(random=True):
     i += 1
     node.right.right.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
 
-    # i += 1
-    # node.left.left.left.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.left.left.left.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.left.left.right.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.left.left.right.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.left.right.left.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.left.right.left.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.left.right.right.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.left.right.right.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.right.left.left.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.right.left.left.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.right.left.right.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.right.left.right.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.right.right.left.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.right.right.left.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.right.right.right.left = BinaryTree(int((random.random() * 20) // 1) else if random i)
-    # i += 1
-    # node.right.right.right.right = BinaryTree(int((random.random() * 20) // 1) else if random i)
+    i += 1
+    node.left.left.left.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.left.left.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.left.right.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.left.right.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.right.left.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.right.left.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.right.right.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.left.right.right.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.left.left.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.left.left.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.left.right.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.left.right.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.right.left.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.right.left.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.right.right.left = BinaryTree(int((random.random() * 20) // 1) if random else i)
+    i += 1
+    node.right.right.right.right = BinaryTree(int((random.random() * 20) // 1) if random else i)
 
     print("-=-=-=-=-=-=-=-=-=-=-RANDOM_TREE-=-=-=-=-=-=-=-=-=-=-")
     print_tree(node)
@@ -135,6 +135,14 @@ def postorder(node: BinaryTree):
     print(node.val)
 
 
+def leaf_count(node: BinaryTree):
+    if node is None:
+        return 0
+    if node.left is None and node.right is None:
+        return 1
+    return leaf_count(node.left) + leaf_count(node.right)
+
+
 if __name__ == '__main__':
     node = random_binary_tree(False)
-    postorder(node)
+    print(leaf_count(node))
