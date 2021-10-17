@@ -3,9 +3,6 @@ from typing import Optional
 import sys
 
 
-# union
-# findSet
-# makeSet
 class DisjointSet:
 
     node_map = {}
@@ -56,6 +53,75 @@ class DisjointSet:
         return node1.parent != node2.parent
 
 
+class MapHeap:
+
+    mapping = {}
+    heap = []
+
+    # entries: List[key, value]
+    def __init__(self, entries):
+        self.heap = sorted(entries, key = lambda entry: entry[1])
+        i = 0
+        for entry in self.heap:
+            self.mapping[entry[0]] = i
+            i += 1
+
+    # extract min
+    def extract_min(self):
+        cur_min = self.heap[0]
+        del self.mapping[cur_min[0]]
+        if len(self.heap) == 1:
+            self.heap.pop()
+            return cur_min
+        self.heap[0] = self.heap.pop()
+        self.mapping[self.heap[0][0]] = 0
+        # top down heapify
+        self.heapify_top_down()
+        return cur_min
+
+    def heapify_top_down(self, position=0):
+        c1 = (2 * position) + 1
+        c2 = (2 * position) + 2
+        if c1 < len(self.heap) and c2 < len(self.heap):
+            if self.heap[c1][1] < self.heap[c2][1] and self.heap[c1][1] <  self.heap[position][1]:
+                self.swap(c1, position)
+                self.heapify_top_down(c1)
+            elif self.heap[c2][1] < self.heap[c1][1] and self.heap[c2][1] <  self.heap[position][1]:
+                self.swap(c2, position)
+                self.heapify_top_down(c2)
+        elif c1 < len(self.heap) and self.heap[c1][1] <  self.heap[position][1]:
+            self.swap(c1, position)
+            self.heapify_top_down(c1)
+
+    def contains(self, key):
+        return key in self.mapping
+
+    def update(self, key, val):
+        position = self.mapping[key]
+        self.heap[position][1] = val
+        self.heapify_bottom_up(position)
+
+    def heapify_bottom_up(self, position):
+        if position == 0:
+            return
+        parent = self.get_parent(position)
+        if self.heap[parent][1] > self.heap[position][1]:
+            self.swap(parent, position)
+            self.heapify_bottom_up(parent)
+
+    def swap(self, i, j):
+        self.mapping[self.heap[i][0]] = j
+        self.mapping[self.heap[j][0]] = i
+        self.heap[i], self.heap[j] = self.heap[j], self.heap[i]
+
+    @staticmethod
+    def get_parent(index):
+        return int((index - 1) / 2)
+
+    def is_empty(self):
+        return not bool(self.mapping)
+
+
 class MinSpanningTree:
 
     class Edge:
@@ -82,6 +148,39 @@ class MinSpanningTree:
             return str(self.from_v) + " to " + str(self.to_v) + ": " + str(self.val)
 
     @staticmethod
+    def primsOpt(graph, vertices):
+        from minimum_spanning_tree import Edge
+        edge_distance_list = []
+        for from_v, to_v_map in graph.items():
+            for to_v, distance in to_v_map.items():
+                edge_distance_list.append([Edge(from_v, to_v), distance])
+        magic_heap = MapHeap(edge_distance_list)
+        edge_vertex_map = {}
+        mst = {}
+        # fi = magic_heap.heap[0][0]
+        while not magic_heap.is_empty():
+            min_edge, distance = magic_heap.extract_min()
+            min_vertex = min_edge.from_ind
+            if min_vertex in edge_vertex_map:
+                MinSpanningTree.add_edge_obj(mst, edge_vertex_map.get(min_vertex))
+
+            for to_v, weight in graph.get(min_vertex).items():
+                cur_edge = MinSpanningTree.Edge(min_vertex, to_v, weight)
+
+                if to_v not in magic_heap.mapping:
+                    continue
+
+                magic_heap.update(to_v, weight)
+
+                if cur_edge.to_v not in edge_vertex_map:
+                    edge_vertex_map[cur_edge.to_v] = cur_edge
+                else:
+                    edge_vertex_map[cur_edge.to_v] = cur_edge if cur_edge.val <= edge_vertex_map[cur_edge.to_v].val else edge_vertex_map[cur_edge.to_v]
+        # print(fi)
+        MinSpanningTree.print_graph(mst)
+        return mst
+
+    @staticmethod
     def kruskal(graph, vertices):
         disjoint_set = DisjointSet()
         for vertex in vertices:
@@ -100,8 +199,11 @@ class MinSpanningTree:
 
     @staticmethod
     def print_graph(graph):
+        total_cost = 0
         for e, k in graph.items():
             print(e, k)
+            total_cost += sum(list(k.values()))
+        print('total cost: ' + str(total_cost/2))
         print('\n')
 
     @staticmethod
@@ -136,7 +238,6 @@ class MinSpanningTree:
             else:
                 mst[min_to_add[0]][min_to_add[1]] = graph[min_to_add[0]][min_to_add[1]]
 
-        print(mst)
         return mst
 
     @staticmethod
@@ -153,6 +254,10 @@ class MinSpanningTree:
                     mev = (fv, tv)
                     min_edge_weight = e
         return mev
+
+    @staticmethod
+    def add_edge_obj(graph, edge: Edge):
+        return MinSpanningTree.add_edge(graph, edge.from_v, edge.to_v, edge.val)
 
     @staticmethod
     def add_edge(graph, from_v, to_v, weight, done=False):
@@ -189,4 +294,4 @@ if __name__ == '__main__':
     # MinSpanningTree.prims(graph, {'a', 'b', 'c', 'd', 'e', 'f'})
     # for edge in MinSpanningTree.get_non_decreasing_edges(graph):
     #     print(edge)
-    MinSpanningTree.kruskal(graph, {'a', 'b', 'c', 'd', 'e', 'f'})
+    MinSpanningTree.primsOpt(graph, {'a', 'b', 'c', 'd', 'e', 'f'})
