@@ -43,5 +43,5 @@ class Solution:
 
 if __name__ == '__main__':
     s = Solution()
-    print(s.build_kmp_helper('abcaby'))
-    print(s.kmp_search('abxabcabyabc', 'abcaby'))
+    print(s.build_kmp_helper('acacabacacabacacac'))
+    print(s.kmp_search('asdasdasdasdasdacacabacacabacacacasdasdasd', 'acacabacacabacacac'))
